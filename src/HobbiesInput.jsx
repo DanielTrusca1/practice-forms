@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./HobbiesInput.css"
+import "./HobbiesInput.css";
 
 const HobbiesInput = () => {
   const [hobbies, setHobbies] = useState([""]);
@@ -31,20 +31,21 @@ const HobbiesInput = () => {
             onChange={(e) => updateHobby(i, e.target.value)}
             placeholder="Enter hobby"
           />
-          <button
-            type="button"
-            onClick={() => removeHobby(i)}
-            className="hobby-button remove"
-          >
-            X
-          </button>
-          {i === hobbies.length - 1 && (
+          {hobbies.length === 1 || i === hobbies.length - 1 ? (
             <button
               type="button"
               onClick={addHobby}
               className="hobby-button add"
             >
               +
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => removeHobby(i)}
+              className="hobby-button remove"
+            >
+              X
             </button>
           )}
         </div>
