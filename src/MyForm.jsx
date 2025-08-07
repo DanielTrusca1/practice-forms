@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+
+// Import input components
 import SelectCountry from "./SelectCountry";
+import HobbiesInput from "./HobbiesInput";
 
 export default function MyForm() {
   const {
@@ -88,6 +91,8 @@ export default function MyForm() {
         </div>
 
         <SelectCountry/>
+
+        <HobbiesInput/>
 
         <input type="submit" />
       </form>
