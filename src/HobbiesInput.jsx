@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "./HobbiesInput.css"
+
 const HobbiesInput = () => {
   const [hobbies, setHobbies] = useState([""]);
 
