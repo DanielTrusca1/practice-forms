@@ -1,12 +1,10 @@
 import Select from "react-select";
+import countryList from "react-select-country-list";
 
-const options = [
-  { value: "romania", label: "Romania" },
-  { value: "france", label: "France" },
-  { value: "germany", label: "Germany" },
-];
-
+import React, { useMemo } from "react";
 const SelectCountry = () => {
+  const options = useMemo(() => countryList().getData(), []);
+
   return (
     <Select
       className="react-select"
