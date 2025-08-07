@@ -36,8 +36,26 @@ export default function MyForm() {
           <p>{errors.name?.message}</p>
         </div>
 
-        <input {...register("email")} placeholder="Email" />
-        <input {...register("backup-email")} placeholder="Backup Email" />
+        <input
+          {...register("email", {
+            required: "This field is required.",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Must be a valid email adress",
+            },
+          })}
+          placeholder="Email"
+        />
+        <input
+          {...register("backup-email", {
+            required: "This field is required.",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Must be a valid email adress",
+            },
+          })}
+          placeholder="Backup Email"
+        />
         <input type="submit" />
       </form>
     </div>
