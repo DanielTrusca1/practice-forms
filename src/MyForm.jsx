@@ -7,7 +7,7 @@ export default function MyForm() {
     handleSubmit,
     formState: { errors },
     watch,
-    setValue
+    setValue,
   } = useForm();
 
   console.log(errors);
@@ -23,7 +23,6 @@ export default function MyForm() {
 
     // If backup-email is not provided
     if (!backupEmail) {
-
       // Set timer to 1 second after email field suffers changes
       const newTimer = setTimeout(() => {
         setValue("backup-email", email);
@@ -59,26 +58,34 @@ export default function MyForm() {
           <p>{errors.name?.message}</p>
         </div>
 
-        <input
-          {...register("email", {
-            required: "This field is required.",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Must be a valid email adress",
-            },
-          })}
-          placeholder="Email"
-        />
-        <input
-          {...register("backup-email", {
-            required: "This field is required.",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Must be a valid email adress",
-            },
-          })}
-          placeholder="Backup Email"
-        />
+        <div>
+          <input
+            {...register("email", {
+              required: "This field is required.",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Must be a valid email adress",
+              },
+            })}
+            placeholder="Email"
+          />
+          <p>{errors.email?.message}</p>
+        </div>
+
+        <div>
+          <input
+            {...register("backup-email", {
+              required: "This field is required.",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Must be a valid email adress",
+              },
+            })}
+            placeholder="Backup Email"
+          />
+          <p>{errors.email?.message}</p>
+        </div>
+
         <input type="submit" />
       </form>
     </div>
