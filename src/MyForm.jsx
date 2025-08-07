@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function MyForm() {
@@ -6,9 +6,32 @@ export default function MyForm() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue
   } = useForm();
 
   console.log(errors);
+
+  // Watch email and backup-email fields state
+  const email = watch("email");
+  const backupEmail = watch("backupEmail");
+  const [timer, setTimer] = useState(null);
+
+  // Autofill backup-email field
+  useEffect(() => {
+    if (timer) clearTimeout(timer);
+
+    // If backup-email is not provided
+    if (!backupEmail) {
+
+      // Set timer to 1 second after email field suffers changes
+      const newTimer = setTimeout(() => {
+        setValue("backup-email", email);
+      }, 1500);
+
+      setTimer(newTimer);
+    }
+  }, [email]);
 
   return (
     <div>
