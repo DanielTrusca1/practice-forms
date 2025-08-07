@@ -1,5 +1,5 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 form {
   max-width: 500px;
@@ -59,4 +59,5 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
+} 
+

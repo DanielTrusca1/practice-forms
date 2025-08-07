@@ -1,9 +1,20 @@
-import React from 'react'
+import Select from "react-select";
+
+const options = [
+  { value: "romania", label: "Romania" },
+  { value: "france", label: "France" },
+  { value: "germany", label: "Germany" },
+];
 
 const SelectCountry = () => {
   return (
-    <div>SelectCountry</div>
-  )
-}
+    <Select
+      className="react-select"
+      classNamePrefix="react-select"
+      options={options}
+      isClearable
+    />
+  );
+};
 
-export default SelectCountry
+export default SelectCountry;

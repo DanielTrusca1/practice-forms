@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import SelectCountry from "./SelectCountry";
 
 export default function MyForm() {
   const {
@@ -85,6 +86,8 @@ export default function MyForm() {
           />
           <p>{errors.email?.message}</p>
         </div>
+
+        <SelectCountry/>
 
         <input type="submit" />
       </form>
