@@ -72,11 +72,52 @@ button:hover {
   font-size: 22px !important;
   font-weight: 400;
   display: flex;
-  align-items: center;}
+  align-items: center;
+}
 
 /* Add spacing between flag emoji and text */
 .react-select__single-value::first-letter,
 .react-select__option::first-letter {
   font-size: 30px;
   margin-right: 10px;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+}
+
+.modal p {
+  margin: 10px 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal button {
+  position: relative;
+  top: 15px;
+  width: 100px !important;
+  margin: 10px !important;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 15px 0px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.modal button:hover {
+  background: #0056b3;
 }
