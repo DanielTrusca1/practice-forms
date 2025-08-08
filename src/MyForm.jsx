@@ -12,18 +12,18 @@ export default function MyForm() {
     formState: { errors },
     watch,
     setValue,
-  } = useForm();
-
-  console.log(errors);
+  } = useForm({ mode: "onBlur" });
 
   // Watch email and backup-email fields state
   const email = watch("email");
-  const backupEmail = watch("backupEmail");
+  const backupEmail = watch("backup-email");
   const [timer, setTimer] = useState(null);
 
   // Autofill backup-email field
   useEffect(() => {
     if (timer) clearTimeout(timer);
+
+    console.log(backupEmail)
 
     // If backup-email is not provided
     if (!backupEmail) {
@@ -100,7 +100,9 @@ export default function MyForm() {
               required: "This field is required.",
               validate: async (value) => {
                 await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
-                return value.toLowerCase() === "john" ? "Username already taken" : true;
+                return value.toLowerCase().startsWith("john")
+                  ? "Username already taken"
+                  : true;
               },
             })}
             placeholder="Userame"
