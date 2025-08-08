@@ -5,26 +5,13 @@ autofill backup email when leaving email field
 display loading message on username input while API call is being processed
 */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useBlocker } from "react-router";
+import { useBlocker, useFetcher } from "react-router";
 
 // Import input components
 import SelectCountry from "./SelectCountry";
 import HobbiesInput from "./HobbiesInput";
-
-function usePrompt(when, message) {
-  const blocker = useBlocker(when);
-  useEffect(() => {
-    if (blocker.state === "blocked") {
-      if (window.confirm(message)) {
-        blocker.proceed();
-      } else {
-        blocker.reset();
-      }
-    }
-  }, [blocker, message]);
-}
 
 export default function MyForm() {
   const {
@@ -45,8 +32,7 @@ export default function MyForm() {
     },
   });
 
-  console.log(formState.dirtyFields, formState.isDirty);
-  usePrompt(isDirty, "You have unsaved changes. Leave anyway?");
+  console.log(formState.isDirty);
 
   // Watch email and backup-email fields state
   const email = watch("email");
@@ -68,19 +54,8 @@ export default function MyForm() {
     }
   }, [email]);
 
-  /*
-  // Block navigation if the form has changes
-  useEffect(() => {
-    const handler = (e) => {
-      if (isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
-  }, [isDirty]);
-  */
+  const fetcher = useFetcher();
+  const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
 
   return (
     <div>
@@ -158,6 +133,20 @@ export default function MyForm() {
 
         <input type="submit" />
       </form>
+
+      {true && (
+        <div className="modal">
+          <p>This form has unsaved changes</p>
+          <p>
+            <button type="button" onClick={() => blocker.proceed()}>
+              Leave
+            </button>{" "}
+            <button type="button" onClick={() => blocker.reset()}>
+              Stay here
+            </button>
+          </p>
+        </div>
+      )}
     </div>
   );
 }
