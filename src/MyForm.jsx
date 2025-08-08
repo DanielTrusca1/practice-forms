@@ -90,9 +90,23 @@ export default function MyForm() {
           <p>{errors.email?.message}</p>
         </div>
 
-        <SelectCountry/>
+        <SelectCountry />
 
-        <HobbiesInput/>
+        <HobbiesInput />
+
+        <div>
+          <input
+            {...register("username", {
+              required: "This field is required.",
+              validate: async (value) => {
+                await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
+                return value.toLowerCase() === "john" ? "Username already taken" : true;
+              },
+            })}
+            placeholder="Userame"
+          />
+          <p>{errors.username?.message}</p>
+        </div>
 
         <input type="submit" />
       </form>
