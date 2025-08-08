@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { unstable_useBlocker as useBlocker } from "react-router-dom";
 
 // Import input components
 import SelectCountry from "./SelectCountry";
 import HobbiesInput from "./HobbiesInput";
+
+function usePrompt(when, message) {
+  const blocker = useBlocker(when);
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      if (window.confirm(message)) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker, message]);
+}
 
 export default function MyForm() {
   const {
@@ -14,6 +28,8 @@ export default function MyForm() {
     watch,
     setValue,
   } = useForm({ mode: "onBlur" });
+
+  usePrompt(isDirty, "You have unsaved changes. Leave anyway?");
 
   // Watch email and backup-email fields state
   const email = watch("email");
@@ -37,6 +53,7 @@ export default function MyForm() {
     }
   }, [email]);
 
+  /*
   // Block navigation if the form has changes
   useEffect(() => {
     const handler = (e) => {
@@ -48,6 +65,7 @@ export default function MyForm() {
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
   }, [isDirty]);
+  */
 
   return (
     <div>
