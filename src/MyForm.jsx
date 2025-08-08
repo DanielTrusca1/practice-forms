@@ -10,6 +10,7 @@ export default function MyForm() {
     register,
     handleSubmit,
     formState: { errors },
+    formState: { isDirty },
     watch,
     setValue,
   } = useForm({ mode: "onBlur" });
@@ -23,7 +24,7 @@ export default function MyForm() {
   useEffect(() => {
     if (timer) clearTimeout(timer);
 
-    console.log(backupEmail)
+    console.log(backupEmail);
 
     // If backup-email is not provided
     if (!backupEmail) {
@@ -35,6 +36,18 @@ export default function MyForm() {
       setTimer(newTimer);
     }
   }, [email]);
+
+  // Block navigation if the form has changes
+  useEffect(() => {
+    const handler = (e) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [isDirty]);
 
   return (
     <div>
