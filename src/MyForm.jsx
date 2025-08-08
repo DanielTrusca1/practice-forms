@@ -5,26 +5,25 @@ autofill backup email when leaving email field
 display loading message on username input while API call is being processed
 */
 
-
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useBlocker } from "react-router";
 
 // Import input components
 import SelectCountry from "./SelectCountry";
 import HobbiesInput from "./HobbiesInput";
 
 function usePrompt(when, message) {
-  
-//   const blocker = useBlocker(when);
-//   useEffect(() => {
-//     if (blocker.state === "blocked") {
-//       if (window.confirm(message)) {
-//         blocker.proceed();
-//       } else {
-//         blocker.reset();
-//       }
-//     }
-//   }, [blocker, message]);
+  const blocker = useBlocker(when);
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      if (window.confirm(message)) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker, message]);
 }
 
 export default function MyForm() {
@@ -33,10 +32,20 @@ export default function MyForm() {
     handleSubmit,
     formState: { errors },
     formState: { isDirty },
+    formState,
     watch,
     setValue,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      name: "",
+      email: "",
+      "backup-email": "",
+      username: "username",
+    },
+  });
 
+  console.log(formState.dirtyFields, formState.isDirty);
   usePrompt(isDirty, "You have unsaved changes. Leave anyway?");
 
   // Watch email and backup-email fields state
@@ -47,8 +56,6 @@ export default function MyForm() {
   // Autofill backup-email field
   useEffect(() => {
     if (timer) clearTimeout(timer);
-
-    console.log(backupEmail);
 
     // If backup-email is not provided
     if (!backupEmail) {
