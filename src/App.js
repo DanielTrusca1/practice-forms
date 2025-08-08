@@ -1,19 +1,28 @@
 import "./App.css";
 import MyForm from "./MyForm";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
 
-import About from "./About"
+import About from "./About";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<MyForm />} />
+      <Route path="/about" element={<About />} />
+    </>
+  )
+);
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MyForm />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </div>
   );
 }
