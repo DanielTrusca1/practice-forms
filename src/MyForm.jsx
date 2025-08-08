@@ -1,10 +1,8 @@
 /*
 todo
-
-autofill backup email when leaving email field
 */
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useBlocker, useNavigate } from "react-router";
 
@@ -34,22 +32,6 @@ export default function MyForm() {
   // Watch email and backup-email fields state
   const email = watch("email");
   const backupEmail = watch("backup-email");
-  const [timer, setTimer] = useState(null);
-
-  // Autofill backup-email field
-  useEffect(() => {
-    if (timer) clearTimeout(timer);
-
-    // If backup-email is not provided
-    if (!backupEmail) {
-      // Set timer to 1 second after email field suffers changes
-      const newTimer = setTimeout(() => {
-        setValue("backup-email", email);
-      }, 1500);
-
-      setTimer(newTimer);
-    }
-  }, [email]);
 
   // Block navigation if the form has changes
   const navigate = useNavigate();
@@ -94,6 +76,13 @@ export default function MyForm() {
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Must be a valid email adress",
+              },
+              validate: async (value) => {
+                // Autofill backup-email field
+                // If backup-email is not provided
+                if (!backupEmail) {
+                  setValue("backup-email", email);
+                }
               },
             })}
             placeholder="Email"
