@@ -2,7 +2,6 @@
 todo
 
 autofill backup email when leaving email field
-display loading message on username input while API call is being processed
 */
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -19,6 +18,7 @@ export default function MyForm() {
     handleSubmit,
     formState: { errors },
     formState: { isDirty },
+    formState,
     watch,
     setValue,
   } = useForm({
@@ -27,7 +27,7 @@ export default function MyForm() {
       name: "",
       email: "",
       "backup-email": "",
-      username: "username",
+      username: "",
     },
   });
 
@@ -60,10 +60,8 @@ export default function MyForm() {
   };
 
   return (
-    <div>
-      <button onClick={leave}>
-        Go to a different page
-      </button>
+    <div className="form">
+      <button onClick={leave}>Go to a different page</button>
 
       <form
         onSubmit={handleSubmit((data) => {
@@ -121,7 +119,7 @@ export default function MyForm() {
 
         <HobbiesInput />
 
-        <div>
+        <div className="input">
           <input
             {...register("username", {
               required: "This field is required.",
@@ -134,6 +132,7 @@ export default function MyForm() {
             })}
             placeholder="Userame"
           />
+          {formState.isValidating && <p className="inner-tip">Loading...</p>}
           <p>{errors.username?.message}</p>
         </div>
 

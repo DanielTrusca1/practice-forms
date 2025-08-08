@@ -121,3 +121,20 @@ button:hover {
 .modal button:hover {
   background: #0056b3;
 }
+.input {
+  position: relative;
+}
+.inner-tip {
+  position: absolute;
+  right: 15px;
+  top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  color: white;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(100, 100, 100);
+}
