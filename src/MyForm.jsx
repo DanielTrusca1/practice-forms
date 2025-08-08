@@ -7,7 +7,7 @@ display loading message on username input while API call is being processed
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useBlocker, useFetcher } from "react-router";
+import { useBlocker, useNavigate } from "react-router";
 
 // Import input components
 import SelectCountry from "./SelectCountry";
@@ -19,7 +19,6 @@ export default function MyForm() {
     handleSubmit,
     formState: { errors },
     formState: { isDirty },
-    formState,
     watch,
     setValue,
   } = useForm({
@@ -31,8 +30,6 @@ export default function MyForm() {
       username: "username",
     },
   });
-
-  console.log(formState.isDirty);
 
   // Watch email and backup-email fields state
   const email = watch("email");
@@ -54,11 +51,20 @@ export default function MyForm() {
     }
   }, [email]);
 
-  const fetcher = useFetcher();
+  // Block navigation if the form has changes
+  const navigate = useNavigate();
   const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
+
+  const leave = () => {
+    navigate("/about");
+  };
 
   return (
     <div>
+      <button onClick={leave}>
+        Go to a different page
+      </button>
+
       <form
         onSubmit={handleSubmit((data) => {
           console.log(data);
@@ -134,7 +140,7 @@ export default function MyForm() {
         <input type="submit" />
       </form>
 
-      {true && (
+      {blocker.state === "blocked" && (
         <div className="modal">
           <p>This form has unsaved changes</p>
           <p>
