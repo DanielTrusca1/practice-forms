@@ -9,12 +9,14 @@ import {
 } from "react-router-dom";
 
 import About from "./About";
+import Form from "./Form";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<MyForm />} />
       <Route path="/about" element={<About />} />
+      <Route path="/form" element={<Form />} />
     </>
   )
 );
