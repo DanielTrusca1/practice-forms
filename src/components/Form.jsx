@@ -19,6 +19,18 @@ const Form = () => {
       if (value === "") errorMessage = "This field is required.";
       if (value.length < 3) errorMessage = "Minimum length is 3.";
       if (value.length > 50) errorMessage = "Maximum length is 50.";
+
+      const isAlphaRegex = /^[A-Za-z]+$/;
+      if (isAlphaRegex.test(value) === false)
+        errorMessage = "Only letters are allowed.";
+    }
+
+    if (field === "email" || field === "backupEmail") {
+      if (value === "") errorMessage = "This field is required.";
+
+      const isEmailRegex = /^[A-Za-z]+$/;
+      if (isEmailRegex.test(value) === true)
+        errorMessage = "Must be a valid email adress";
     }
 
     // Update errors object state
@@ -74,7 +86,9 @@ const Form = () => {
           value={form.username}
           onChange={(e) => handleChange("username", e.target.value)}
         />
-        {errors.username && <p className="validation-message">{errors.username}</p>}
+        {errors.username && (
+          <p className="validation-message">{errors.username}</p>
+        )}
 
         <button type="submit">Submit</button>
       </form>
