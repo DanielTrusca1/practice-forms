@@ -1,11 +1,35 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { updateField, resetForm } from "../redux/formSlice";
+import { updateField } from "../redux/formSlice";
 import HobbiesInput from "../HobbiesInput";
+import { useState } from "react";
 
 const Form = () => {
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
+
+  // Track validation errors
+  const [errors, setErrors] = useState({});
+
+  // Validate individual input fields
+  const validate = (field, value) => {
+    let errorMessage = "";
+
+    if (field === "name") {
+      if (value === "") errorMessage = "This field is required.";
+      if (value.length < 3) errorMessage = "Minimum length is 3.";
+      if (value.length > 50) errorMessage = "Maximum length is 50.";
+    }
+
+    // Return true if field is valid
+    return errorMessage === "";
+  };
+
+  // Dispatch input change for updating state
+  const handleChange = (field, value) => {
+    dispatch(updateField({ field, value }));
+    validate(field, value);
+  };
 
   return (
     <div className="redux-form">
@@ -18,26 +42,18 @@ const Form = () => {
         <p>Name: </p>
         <input
           value={form.name}
-          onChange={(e) =>
-            dispatch(updateField({ field: "name", value: e.target.value }))
-          }
+          onChange={(e) => handleChange("name", e.target.value)}
         />
         <p>Email: </p>
 
         <input
           value={form.email}
-          onChange={(e) =>
-            dispatch(updateField({ field: "email", value: e.target.value }))
-          }
+          onChange={(e) => handleChange("email", e.target.value)}
         />
         <p>Backup Email: </p>
         <input
           value={form.backupEmail}
-          onChange={(e) =>
-            dispatch(
-              updateField({ field: "backupEmail", value: e.target.value })
-            )
-          }
+          onChange={(e) => handleChange("backupEmail", e.target.value)}
         />
 
         <p>Hobbies: </p>
@@ -47,9 +63,7 @@ const Form = () => {
         <p>Username: </p>
         <input
           value={form.username}
-          onChange={(e) =>
-            dispatch(updateField({ field: "username", value: e.target.value }))
-          }
+          onChange={(e) => handleChange("username", e.target.value)}
         />
 
         <button type="submit">Submit</button>
