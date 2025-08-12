@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const formSlice = createSlice({
   name: "form",
-  initialState: { name: "", email: "", "backup-email": "", username: "" },
+  initialState: { name: "", email: "", backupEmail: "", username: "" },
   reducers: {
     updateField: (state, action) => {
       state[action.payload.field] = action.payload.value;
@@ -10,7 +10,7 @@ const formSlice = createSlice({
     resetForm: () => ({
       name: "",
       email: "",
-      "backup-email": "",
+      backupEmail: "",
       username: "",
     }),
   },

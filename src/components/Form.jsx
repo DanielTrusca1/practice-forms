@@ -50,10 +50,8 @@ const Form = () => {
   const autofillBackupEmail = (e) => {
     const value = e.target.value;
 
-    console.log(value);
-    console.log(form);
     if (form.backupEmail === "")
-      dispatch(updateField({ field: "backupEmail", value: form.email }));
+      dispatch(updateField({ field: "backupEmail", value }));
   };
 
   return (
@@ -68,7 +66,6 @@ const Form = () => {
         <input
           value={form.name}
           onChange={(e) => handleChange("name", e.target.value)}
-          onBlur={autofillBackupEmail}
         />
         {errors.name && <p className="validation-message">{errors.name}</p>}
 
@@ -76,6 +73,7 @@ const Form = () => {
         <input
           value={form.email}
           onChange={(e) => handleChange("email", e.target.value)}
+          onBlur={autofillBackupEmail}
         />
         {errors.email && <p className="validation-message">{errors.email}</p>}
 
