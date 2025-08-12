@@ -138,6 +138,13 @@ button:hover {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: rgb(100, 100, 100);
 }
+.redux-form .inner-tip {
+  position: relative;
+  left: 82%;
+  top: -6.4vh;
+  color: white;
+  font-size: 15px;
+}
 .redux-form input {
   margin-bottom: 2vh;
 }

@@ -9,14 +9,10 @@ const Form = () => {
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
 
+  const [isValidating, setIsValidating] = useState(false);
+
   // Track validation errors
   const [errors, setErrors] = useState({});
-
-  const checkUsername = async (value) => {
-    return value.toLowerCase().startsWith("john")
-      ? "Username already taken"
-      : true;
-  };
 
   // Validate individual input fields
   const validate = async (field, value) => {
@@ -43,7 +39,11 @@ const Form = () => {
     if (field === "username") {
       if (value === "") errorMessage = "This field is required.";
 
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
+      setIsValidating(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1300)); // 1s delay
+
+      setIsValidating(false);
 
       if (value.toLowerCase().startsWith("john"))
         errorMessage = "Username already taken.";
@@ -114,15 +114,21 @@ const Form = () => {
 
         <HobbiesInput />
 
-        <p>Username: </p>
-        <input
-          value={form.username}
-          onChange={(e) => handleChange("username", e.target.value)}
-          onBlur={(e) => validate("username", e.target.value)}
-        />
-        {errors.username && (
-          <p className="validation-message">{errors.username}</p>
-        )}
+        <div>
+          <p>Username: </p>
+          <input
+            value={form.username}
+            onChange={(e) => {
+              handleChange("username", e.target.value);
+              validate("username", e.target.value);
+            }}
+          />
+          {isValidating && <p className="inner-tip">Loading...</p>}
+
+          {errors.username && (
+            <p className="validation-message">{errors.username}</p>
+          )}
+        </div>
 
         <button type="submit">Submit</button>
       </form>
