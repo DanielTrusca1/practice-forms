@@ -28,8 +28,8 @@ const Form = () => {
     if (field === "email" || field === "backupEmail") {
       if (value === "") errorMessage = "This field is required.";
 
-      const isEmailRegex = /^[A-Za-z]+$/;
-      if (isEmailRegex.test(value) === true)
+      const isEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (isEmailRegex.test(value) === false)
         errorMessage = "Must be a valid email adress";
     }
 
@@ -46,6 +46,16 @@ const Form = () => {
     validate(field, value);
   };
 
+  // Autofill backup email unless specified
+  const autofillBackupEmail = (e) => {
+    const value = e.target.value;
+
+    console.log(value);
+    console.log(form);
+    if (form.backupEmail === "")
+      dispatch(updateField({ field: "backupEmail", value: form.email }));
+  };
+
   return (
     <div className="redux-form">
       <form
@@ -58,6 +68,7 @@ const Form = () => {
         <input
           value={form.name}
           onChange={(e) => handleChange("name", e.target.value)}
+          onBlur={autofillBackupEmail}
         />
         {errors.name && <p className="validation-message">{errors.name}</p>}
 
