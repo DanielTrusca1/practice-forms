@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import About from "./About";
-import Form from "./Form";
+import Form from "./components/Form";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
