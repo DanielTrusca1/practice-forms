@@ -21,6 +21,9 @@ const Form = () => {
       if (value.length > 50) errorMessage = "Maximum length is 50.";
     }
 
+    // Update errors object state
+    setErrors((prev) => ({ ...prev, [field]: errorMessage }));
+
     // Return true if field is valid
     return errorMessage === "";
   };
@@ -44,17 +47,23 @@ const Form = () => {
           value={form.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
-        <p>Email: </p>
+        {errors.name && <p className="validation-message">{errors.name}</p>}
 
+        <p>Email: </p>
         <input
           value={form.email}
           onChange={(e) => handleChange("email", e.target.value)}
         />
+        {errors.email && <p className="validation-message">{errors.email}</p>}
+
         <p>Backup Email: </p>
         <input
           value={form.backupEmail}
           onChange={(e) => handleChange("backupEmail", e.target.value)}
         />
+        {errors.backupEmail && (
+          <p className="validation-message">{errors.backupEmail}</p>
+        )}
 
         <p>Hobbies: </p>
 
@@ -65,6 +74,7 @@ const Form = () => {
           value={form.username}
           onChange={(e) => handleChange("username", e.target.value)}
         />
+        {errors.username && <p className="validation-message">{errors.username}</p>}
 
         <button type="submit">Submit</button>
       </form>
