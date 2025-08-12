@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = { name: "", email: "", backupEmail: "", username: "" };
+
 const formSlice = createSlice({
   name: "form",
-  initialState: { name: "", email: "", backupEmail: "", username: "" },
+  initialState: { ...initialState, isDirty: false },
   reducers: {
     updateField: (state, action) => {
       state[action.payload.field] = action.payload.value;
+      state.isDirty = Object.keys(initialState).some(
+        key => state[key] !== initialState[key]
+      );
     },
-    resetForm: () => ({
-      name: "",
-      email: "",
-      backupEmail: "",
-      username: "",
-    }),
+    resetForm: () => (initialState),
   },
 });
 

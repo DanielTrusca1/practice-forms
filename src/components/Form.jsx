@@ -1,4 +1,6 @@
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useBlocker, useNavigate } from "react-router";
 
 import { updateField } from "../redux/formSlice";
 import HobbiesInput from "../HobbiesInput";
@@ -71,6 +73,16 @@ const Form = () => {
       dispatch(updateField({ field: "backupEmail", value }));
   };
 
+  // Block navigation if the form has changes
+  const navigate = useNavigate();
+  const isDirty = useSelector((state) => state.form.isDirty);
+
+  const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
+
+  const leave = () => {
+    navigate("/about");
+  };
+
   return (
     <div className="redux-form">
       <form
@@ -132,6 +144,20 @@ const Form = () => {
 
         <button type="submit">Submit</button>
       </form>
+
+      {blocker.state === "blocked" && (
+        <div className="modal">
+          <p>This form has unsaved changes</p>
+          <p>
+            <button type="button" onClick={() => blocker.proceed()}>
+              Leave
+            </button>{" "}
+            <button type="button" onClick={() => blocker.reset()}>
+              Stay here
+            </button>
+          </p>
+        </div>
+      )}
     </div>
   );
 };
