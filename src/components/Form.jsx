@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateField } from "../redux/formSlice";
 import HobbiesInput from "../HobbiesInput";
 import { useState } from "react";
+import SelectCountry from "../SelectCountry";
 
 const Form = () => {
   const form = useSelector((state) => state.form);
@@ -11,8 +12,14 @@ const Form = () => {
   // Track validation errors
   const [errors, setErrors] = useState({});
 
+  const checkUsername = async (value) => {
+    return value.toLowerCase().startsWith("john")
+      ? "Username already taken"
+      : true;
+  };
+
   // Validate individual input fields
-  const validate = (field, value) => {
+  const validate = async (field, value) => {
     let errorMessage = "";
 
     if (field === "name") {
@@ -33,6 +40,15 @@ const Form = () => {
         errorMessage = "Must be a valid email adress";
     }
 
+    if (field === "username") {
+      if (value === "") errorMessage = "This field is required.";
+
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
+
+      if (value.toLowerCase().startsWith("john"))
+        errorMessage = "Username already taken.";
+    }
+
     // Update errors object state
     setErrors((prev) => ({ ...prev, [field]: errorMessage }));
 
@@ -43,11 +59,12 @@ const Form = () => {
   // Dispatch input change for updating state
   const handleChange = (field, value) => {
     dispatch(updateField({ field, value }));
-    validate(field, value);
   };
 
   // Autofill backup email unless specified
   const autofillBackupEmail = (e) => {
+    if (form.email === "") return;
+
     const value = e.target.value;
 
     if (form.backupEmail === "")
@@ -66,6 +83,7 @@ const Form = () => {
         <input
           value={form.name}
           onChange={(e) => handleChange("name", e.target.value)}
+          onBlur={(e) => validate("name", e.target.value)}
         />
         {errors.name && <p className="validation-message">{errors.name}</p>}
 
@@ -73,18 +91,24 @@ const Form = () => {
         <input
           value={form.email}
           onChange={(e) => handleChange("email", e.target.value)}
-          onBlur={autofillBackupEmail}
+          onBlur={(e) => {
+            validate("email", e.target.value);
+            autofillBackupEmail();
+          }}
         />
         {errors.email && <p className="validation-message">{errors.email}</p>}
 
         <p>Backup Email: </p>
         <input
           value={form.backupEmail}
-          onChange={(e) => handleChange("backupEmail", e.target.value)}
+          onBlur={(e) => validate("backupEmail", e.target.value)}
         />
         {errors.backupEmail && (
           <p className="validation-message">{errors.backupEmail}</p>
         )}
+
+        <p>Country: </p>
+        <SelectCountry />
 
         <p>Hobbies: </p>
 
@@ -94,6 +118,7 @@ const Form = () => {
         <input
           value={form.username}
           onChange={(e) => handleChange("username", e.target.value)}
+          onBlur={(e) => validate("username", e.target.value)}
         />
         {errors.username && (
           <p className="validation-message">{errors.username}</p>
