@@ -29,7 +29,6 @@ const HobbiesInput = () => {
             type="text"
             value={hobby}
             onChange={(e) => updateHobby(i, e.target.value)}
-            placeholder="Enter hobby"
           />
           {hobbies.length === 1 || i === hobbies.length - 1 ? (
             <button
