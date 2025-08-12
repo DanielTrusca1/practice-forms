@@ -9,10 +9,10 @@ const formSlice = createSlice({
     updateField: (state, action) => {
       state[action.payload.field] = action.payload.value;
       state.isDirty = Object.keys(initialState).some(
-        key => state[key] !== initialState[key]
+        (key) => state[key] !== initialState[key]
       );
     },
-    resetForm: () => (initialState),
+    resetForm: () => ({ ...initialState, isDirty: false }),
   },
 });
 

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useBlocker, useNavigate } from "react-router";
 
-import { updateField } from "../redux/formSlice";
+import { updateField, resetForm } from "../redux/formSlice";
 import HobbiesInput from "../HobbiesInput";
 import { useState } from "react";
 import SelectCountry from "../SelectCountry";
@@ -85,10 +85,13 @@ const Form = () => {
 
   return (
     <div className="redux-form">
+      <button onClick={leave}>Go to a different page</button>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
           console.log(form);
+          dispatch(resetForm());
         }}
       >
         <p>Name: </p>
