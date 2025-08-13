@@ -1,4 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
-import formReducer from "./formSlice";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-export const store = configureStore({ reducer: { form: formReducer } });
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: {
+    value: 0,
+  },
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+  },
+});
+
+export const { increment } = counterSlice.actions;
+
+export const store = configureStore({
+  reducer: { counter: counterSlice.reducer },
+});

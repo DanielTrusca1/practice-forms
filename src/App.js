@@ -10,6 +10,7 @@ import {
 
 import About from "./About";
 import Form from "./components/Form";
+import Sandbox from "./components/Sandbox";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<MyForm />} />
       <Route path="/about" element={<About />} />
       <Route path="/form" element={<Form />} />
+      <Route path="/sandbox" element={<Sandbox />} />
     </>
   )
 );
