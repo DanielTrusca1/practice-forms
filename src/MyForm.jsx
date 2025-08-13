@@ -77,14 +77,14 @@ export default function MyForm() {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Must be a valid email adress",
               },
-              validate: async (value) => {
-                // Autofill backup-email field
-                // If backup-email is not provided
-                if (!backupEmail) {
-                  setValue("backup-email", email);
-                }
-              },
             })}
+            onBlur={async () => {
+              // Autofill backup-email field
+              // If backup-email is not provided
+              if (!backupEmail) {
+                setValue("backup-email", email);
+              }
+            }}
             placeholder="Email"
           />
           <p>{errors.email?.message}</p>
@@ -119,6 +119,7 @@ export default function MyForm() {
                   : true;
               },
             })}
+            onChange={async (e) => {}}
             placeholder="Userame"
           />
           {formState.isValidating && <p className="inner-tip">Loading...</p>}
