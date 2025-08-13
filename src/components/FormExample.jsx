@@ -1,9 +1,13 @@
 import { reduxForm, Field } from "redux-form";
 
-import CustomInput from "./CustomInput";
-
 // Custom input field JSX example
-const customInput = (props) => <CustomInput {...props.input} type="text" />;
+const customInput = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}:</label>
+    <input {...input} type={type} placeholder={label} />
+    {touched && error && <span>{error}</span>}
+  </div>
+);
 
 const onSubmit = (values) => {
   console.log(JSON.stringify(values));
@@ -21,7 +25,12 @@ const Form = ({ handleSubmit }) => {
     <div>
       <h1>Redux Form</h1>
       <form onSubmit={handleSubmit}>
-        <Field name="name" component={customInput} validate={required}/>
+        <Field
+          name="name"
+          component={customInput}
+          validate={required}
+          label="Name"
+        />
         <button type="submit">Submit</button>
       </form>
     </div>
