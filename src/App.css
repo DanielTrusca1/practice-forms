@@ -173,10 +173,11 @@ button:hover {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .sandbox button {
+  align-items: center;
   margin-top: 2vh;
-  width: 5vw;
+  width: 13vw;
   height: 5vh;
   background-color: rgb(230, 230, 230);
   color: black;
-  font-size: 22px;
+  font-size: 20px;
 }

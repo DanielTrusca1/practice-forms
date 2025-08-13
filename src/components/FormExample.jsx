@@ -23,7 +23,6 @@ const required = (val) => {
 const Form = ({ handleSubmit }) => {
   return (
     <div>
-      <h1>Redux Form</h1>
       <form onSubmit={handleSubmit}>
         <Field
           name="name"
@@ -31,6 +30,28 @@ const Form = ({ handleSubmit }) => {
           validate={required}
           label="Name"
         />
+
+        <Field
+          name="email"
+          component={customInput}
+          validate={required}
+          label="Email"
+        />
+
+        <Field
+          name="backupEmail"
+          component={customInput}
+          validate={required}
+          label="Backup-Email"
+        />
+
+        <Field
+          name="username"
+          component={customInput}
+          validate={required}
+          label="Username"
+        />
+
         <button type="submit">Submit</button>
       </form>
     </div>
