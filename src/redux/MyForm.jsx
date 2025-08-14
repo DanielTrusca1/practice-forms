@@ -5,6 +5,14 @@ import CustomInput from "./CustomInput";
 import SelectCountry from "../SelectCountry";
 import HobbiesInputArray from "./HobbiesInputArray";
 
+const required = (value) => (value ? undefined : "Required");
+
+const minLength = (min) => (value) =>
+  value && value.length < min ? `Must be at least ${min} chars` : undefined;
+
+const maxLength = (max) => (value) =>
+  value && value.length > max ? `Must be at most ${max} chars` : undefined;
+
 const MyForm = ({ handleSubmit }) => (
   <div className="redux-form">
     <form onSubmit={handleSubmit((values) => console.log(values))}>
@@ -13,6 +21,7 @@ const MyForm = ({ handleSubmit }) => (
         label="Name"
         component={CustomInput} /// Use the custom input component instead of the default !
         type="text"
+        validate={[required, minLength(3), maxLength(50)]}
       />
       <Field name="email" label="Email" component={CustomInput} type="email" />
       <Field
@@ -42,4 +51,5 @@ export default reduxForm({
   initialValues: {
     hobbies: [""],
   },
+  enableReinitialize: true,
 })(MyForm);
