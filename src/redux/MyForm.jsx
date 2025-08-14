@@ -1,14 +1,16 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 
+import CustomInput from "./CustomInput";
+
 const MyForm = ({ handleSubmit }) => (
   <div className="redux-form">
     <form onSubmit={handleSubmit((values) => console.log(values))}>
       <Field
-        name="username"
-        component="input"
+        name="Name"
+        label="Name"
+        component={CustomInput} /// Use the custom input component instead of the default !
         type="text"
-        placeholder="Username"
       />
       <button type="submit">Submit</button>
     </form>
