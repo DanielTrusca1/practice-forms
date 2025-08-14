@@ -11,10 +11,16 @@ import {
 import About from "./About";
 import Sandbox from "./components/Sandbox";
 
+// Redux imports
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import MyReduxForm from "./redux/MyForm";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<MyForm />} />
+      <Route path="/redux" element={<MyReduxForm />} />
       <Route path="/about" element={<About />} />
       <Route path="/sandbox" element={<Sandbox />} />
     </>
@@ -24,7 +30,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </div>
   );
 }
