@@ -158,7 +158,7 @@ button:hover {
   color: rgb(255, 75, 75) !important;
 }
 
-.sandbox {
+.redux-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,15 +167,15 @@ button:hover {
   margin-top: 10vh;
 }
 
-.sandbox p {
+.redux-form p {
   color: black;
   font-size: 22px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.sandbox button {
+.redux-form button {
   align-items: center;
   margin-top: 2vh;
-  width: 13vw;
+  width: 100%;
   height: 5vh;
   background-color: rgb(230, 230, 230);
   color: black;
