@@ -13,6 +13,14 @@ const minLength = (min) => (value) =>
 const maxLength = (max) => (value) =>
   value && value.length > max ? `Must be at most ${max} chars` : undefined;
 
+const onlyLetters = (value) =>
+  value && /^[A-Za-z]+$/.test(value) ? undefined : "Only letter allowed";
+
+const validEmail = (value) =>
+  value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+    ? undefined
+    : "Invalid email adress";
+
 const MyForm = ({ handleSubmit }) => (
   <div className="redux-form">
     <form onSubmit={handleSubmit((values) => console.log(values))}>
@@ -21,7 +29,7 @@ const MyForm = ({ handleSubmit }) => (
         label="Name"
         component={CustomInput} /// Use the custom input component instead of the default !
         type="text"
-        validate={[required, minLength(3), maxLength(50)]}
+        validate={[required, minLength(3), maxLength(50), onlyLetters]}
       />
       <Field name="email" label="Email" component={CustomInput} type="email" />
       <Field
@@ -29,6 +37,7 @@ const MyForm = ({ handleSubmit }) => (
         label="Backup-Email"
         component={CustomInput}
         type="email"
+        validate={validEmail}
       />
 
       <SelectCountry />
@@ -40,6 +49,7 @@ const MyForm = ({ handleSubmit }) => (
         label="Username"
         component={CustomInput}
         type="text"
+        validate={validEmail}
       />
       <button type="submit">Submit</button>
     </form>
