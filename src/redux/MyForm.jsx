@@ -8,6 +8,10 @@ import HobbiesInputArray from "./HobbiesInputArray";
 // Dispatch actions to reducers
 import { useDispatch } from "react-redux";
 
+// Get form state from Redux
+import { formValueSelector } from "redux-form";
+import { useSelector } from "react-redux";
+
 const required = (value) => (value ? undefined : "Required");
 
 const minLength = (min) => (value) =>
@@ -25,10 +29,21 @@ const validEmail = (value) =>
     : "Invalid email adress";
 
 const MyForm = ({ handleSubmit }) => {
-  // Extract dispatch object
+  // Extract dispatch & selector objects
   const dispatch = useDispatch();
+  const selector = formValueSelector("My Redux Form");
 
-  
+  const backupEmailValue = useSelector((state) =>
+    selector(state, "backupEmail")
+  );
+
+  const autofillBackupEmail = (e) => {
+    // Avoid attempting to autofill with undefined
+    if (!e.target.value) return;
+
+    if (!backupEmailValue)
+      dispatch(change("My Redux Form", "backupEmail", e.target.value));
+  };
 
   return (
     <div className="redux-form">
@@ -46,7 +61,7 @@ const MyForm = ({ handleSubmit }) => {
           component={CustomInput}
           type="text"
           validate={validEmail}
-          onBlurAdditional={(e) => dispatch(change("My Redux Form", "backupEmail", e.target.value))}
+          onBlurAdditional={autofillBackupEmail}
         />
         <Field
           name="backupEmail"
