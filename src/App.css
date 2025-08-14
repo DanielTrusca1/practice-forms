@@ -167,6 +167,15 @@ button:hover {
   margin-top: 10vh;
 }
 
+.redux-form form {
+  position: relative;
+  top: -10vh;
+  width: 25vw;
+}
+.redux-form form input, .redux-form form label {
+  margin-bottom: 2vh;
+}
+
 .redux-form p {
   color: black;
   font-size: 22px;

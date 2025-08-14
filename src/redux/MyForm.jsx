@@ -12,6 +12,25 @@ const MyForm = ({ handleSubmit }) => (
         component={CustomInput} /// Use the custom input component instead of the default !
         type="text"
       />
+      <Field
+        name="email"
+        label="Email"
+        component={CustomInput} /// Use the custom input component instead of the default !
+        type="email"
+      />
+      <Field
+        name="backupEmail"
+        label="Backup-Email"
+        component={CustomInput} /// Use the custom input component instead of the default !
+        type="email"
+      />
+
+      <Field
+        name="username"
+        label="Username"
+        component={CustomInput} /// Use the custom input component instead of the default !
+        type="text"
+      />
       <button type="submit">Submit</button>
     </form>
   </div>
