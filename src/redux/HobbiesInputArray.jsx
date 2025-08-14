@@ -8,7 +8,7 @@ const HobbiesInputArray = ({ fields }) => {
     <div className="redux-hobbies-field">
       <label>Hobbies:</label>
       {fields.map((name, index) => (
-        <div key={index}>
+        <div className="hobbies-field" key={index}>
           <Field
             name={name}
             label="none"
@@ -26,14 +26,21 @@ const HobbiesInputArray = ({ fields }) => {
         </div>
       ))}
 
-      <Field name="addHobby" label="none" component={CustomInput} type="text" />
-      <button
-        type="button"
-        onClick={() => fields.push()}
-        style={{ backgroundColor: "rgb(30, 200, 30)" }}
-      >
-        +
-      </button>
+      <div className="hobbies-field">
+        <Field
+          name="addHobby"
+          label="none"
+          component={CustomInput}
+          type="text"
+        />
+        <button
+          type="button"
+          onClick={() => fields.push()}
+          style={{ backgroundColor: "rgb(30, 200, 30)" }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };

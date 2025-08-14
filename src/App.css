@@ -192,7 +192,7 @@ button:hover {
 }
 .redux-hobbies-field button {
   position: relative;
-  top: -80px;
+  top: -62px;
   left: 91%;
   display: flex;
   flex-direction: column;
@@ -202,4 +202,10 @@ button:hover {
   height: 1.8vw;
   font-size: 20px;
   color: white;
+}
+.redux-hobbies-field input {
+  margin: 0 !important; 
+}
+.redux-hobbies-field .hobbies-field {
+  height: 5vh;
 }
