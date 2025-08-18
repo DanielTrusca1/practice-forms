@@ -8,6 +8,9 @@ let RenderHobbies = ({ fields, formState }) => {
   const dispatch = useDispatch();
 
   const handleAdd = () => {
+    // Prevent undefined value erorr in case input is empty
+    if (!formState) return;
+
     fields.push(formState.addHobbies);
     dispatch(change("My Redux Form", "addHobbies", ""));
   };

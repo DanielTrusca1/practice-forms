@@ -59,7 +59,9 @@ let MyForm = (props) => {
   const checkUsername = async () => {
     await sleep(1300);
 
-    console.log(formState);
+    if (formState.username.toLowerCase().startsWith("john")) {
+      console.log("Username is already taken");
+    }
   };
 
   return (
