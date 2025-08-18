@@ -6,7 +6,7 @@ import SelectCountry from "../SelectCountry";
 import renderHobbies from "./RenderHobbies";
 
 // Dispatch actions to reducers
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 // Get form state from Redux
 import { formValueSelector } from "redux-form";
@@ -28,7 +28,7 @@ const validEmail = (value) =>
     ? undefined
     : "Invalid email adress";
 
-const MyForm = ({ handleSubmit }) => {
+let MyForm = ({ handleSubmit }) => {
   // Extract dispatch & selector objects
   const dispatch = useDispatch();
   const selector = formValueSelector("My Redux Form");
@@ -88,7 +88,17 @@ const MyForm = ({ handleSubmit }) => {
   );
 };
 
-export default reduxForm({
+// Decorate with Redux Form
+MyForm = reduxForm({
   form: "My Redux Form",
-  enableReinitialize: true,
 })(MyForm);
+
+// Decorate with connect to read form values
+const selector = formValueSelector("My Redux Form");
+MyForm = connect((state) => {
+  const addHobbies = selector(state, "addHobbies");
+
+  return { addHobbies };
+})(MyForm);
+
+export default MyForm;

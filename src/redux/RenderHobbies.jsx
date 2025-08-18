@@ -1,11 +1,12 @@
-import { Field } from "redux-form";
+import { Field, formValueSelector } from "redux-form";
 
 // Custom Input component
 import CustomInput from "./CustomInput";
 
 const renderHobbies = ({ fields }) => {
-  const handleAdd = () => {
-    fields.push("");
+  const handleAdd = (value) => {
+    console.log(value);
+    fields.push(value);
   };
 
   return (
@@ -33,10 +34,10 @@ const renderHobbies = ({ fields }) => {
         );
       })}
       <div className="hobbies-field">
-        <Field name="add" label="none" component={CustomInput} type="text" />
+        <Field name="addHobbies" label="none" component={CustomInput} type="text" />
         <button
           type="button"
-          onClick={handleAdd}
+          onClick={(e) => handleAdd(e.target.value)}
           style={{ backgroundColor: "rgb(30, 200, 30)" }}
         >
           +
