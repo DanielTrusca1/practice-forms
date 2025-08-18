@@ -3,10 +3,10 @@ import { Field, FieldArray, reduxForm, change } from "redux-form";
 
 import CustomInput from "./CustomInput";
 import SelectCountry from "../SelectCountry";
-import renderHobbies from "./RenderHobbies";
+import RenderHobbies from "./RenderHobbies";
 
 // Dispatch actions to reducers
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // Get form state from Redux
 import { formValueSelector } from "redux-form";
@@ -78,7 +78,7 @@ let MyForm = (props) => {
 
         <FieldArray
           name="hobbies"
-          component={renderHobbies}
+          component={RenderHobbies}
           addHobbiesValue={addHobbiesValue}
         />
 
@@ -95,17 +95,11 @@ let MyForm = (props) => {
   );
 };
 
+const form = "My Redux Form";
+
 // Decorate with Redux Form
 MyForm = reduxForm({
-  form: "My Redux Form",
-})(MyForm);
-
-// Decorate with connect to read form values
-const selector = formValueSelector("My Redux Form");
-MyForm = connect((state) => {
-  const addHobbiesValue = selector(state, "addHobbiesValue");
-
-  return { addHobbiesValue };
+  form,
 })(MyForm);
 
 export default MyForm;

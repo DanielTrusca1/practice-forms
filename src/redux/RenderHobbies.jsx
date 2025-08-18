@@ -2,12 +2,14 @@ import { change, Field, getFormValues } from "redux-form";
 
 // Custom Input component
 import CustomInput from "./CustomInput";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
-let renderHobbies = ({ fields, formState }) => {
+let RenderHobbies = ({ fields, formState }) => {
+  const dispatch = useDispatch();
+
   const handleAdd = () => {
     fields.push(formState.addHobbies);
-    change("My Redux Form", "addHobbies", "ABC");
+    dispatch(change("My Redux Form", "addHobbies", ""));
   };
 
   return (
@@ -54,10 +56,10 @@ let renderHobbies = ({ fields, formState }) => {
 };
 
 // Decorate with connect to read form values
-renderHobbies = connect((state) => {
+RenderHobbies = connect((state) => {
   const formState = getFormValues("My Redux Form")(state);
 
   return { formState };
-})(renderHobbies);
+})(RenderHobbies);
 
-export default renderHobbies;
+export default RenderHobbies;
