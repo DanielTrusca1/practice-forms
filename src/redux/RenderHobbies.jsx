@@ -1,12 +1,13 @@
-import { Field } from "redux-form";
+import { change, Field, getFormValues } from "redux-form";
 
 // Custom Input component
 import CustomInput from "./CustomInput";
+import { connect } from "react-redux";
 
-const renderHobbies = ({ fields, addHobiesValue }) => {
+let renderHobbies = ({ fields, formState }) => {
   const handleAdd = () => {
-    console.log(addHobiesValue);
-    fields.push(addHobiesValue);
+    fields.push(formState.addHobbies);
+    change("My Redux Form", "addHobbies", "ABC");
   };
 
   return (
@@ -34,7 +35,12 @@ const renderHobbies = ({ fields, addHobiesValue }) => {
         );
       })}
       <div className="hobbies-field">
-        <Field name="addHobbies" label="none" component={CustomInput} type="text" />
+        <Field
+          name="addHobbies"
+          label="none"
+          component={CustomInput}
+          type="text"
+        />
         <button
           type="button"
           onClick={handleAdd}
@@ -46,5 +52,12 @@ const renderHobbies = ({ fields, addHobiesValue }) => {
     </div>
   );
 };
+
+// Decorate with connect to read form values
+renderHobbies = connect((state) => {
+  const formState = getFormValues("My Redux Form")(state);
+
+  return { formState };
+})(renderHobbies);
 
 export default renderHobbies;
