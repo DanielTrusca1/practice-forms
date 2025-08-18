@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 import About from "./About";
-import Sandbox from "./components/Sandbox";
 
 // Redux imports
 import { Provider } from "react-redux";
@@ -22,7 +21,6 @@ const router = createBrowserRouter(
       <Route path="/" element={<MyForm />} />
       <Route path="/redux" element={<MyReduxForm />} />
       <Route path="/about" element={<About />} />
-      <Route path="/sandbox" element={<Sandbox />} />
     </>
   )
 );
