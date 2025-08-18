@@ -3,7 +3,7 @@ import { Field, FieldArray, reduxForm, change } from "redux-form";
 
 import CustomInput from "./CustomInput";
 import SelectCountry from "../SelectCountry";
-import HobbiesInputArray from "./HobbiesInputArray";
+import renderHobbies from "./RenderHobbies";
 
 // Dispatch actions to reducers
 import { useDispatch } from "react-redux";
@@ -73,7 +73,7 @@ const MyForm = ({ handleSubmit }) => {
 
         <SelectCountry />
 
-        <FieldArray name="hobbies" component={HobbiesInputArray} />
+        <FieldArray name="hobbies" component={renderHobbies} />
 
         <Field
           name="username"
@@ -90,8 +90,5 @@ const MyForm = ({ handleSubmit }) => {
 
 export default reduxForm({
   form: "My Redux Form",
-  initialValues: {
-    hobbies: [""],
-  },
   enableReinitialize: true,
 })(MyForm);
