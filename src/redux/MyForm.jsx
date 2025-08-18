@@ -1,12 +1,18 @@
 import React from "react";
-import { Field, FieldArray, reduxForm, change } from "redux-form";
+import {
+  Field,
+  FieldArray,
+  reduxForm,
+  change,
+  getFormValues,
+} from "redux-form";
 
 import CustomInput from "./CustomInput";
 import SelectCountry from "../SelectCountry";
 import RenderHobbies from "./RenderHobbies";
 
 // Dispatch actions to reducers
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 // Get form state from Redux
 import { formValueSelector } from "redux-form";
@@ -30,7 +36,7 @@ const validEmail = (value) =>
 
 let MyForm = (props) => {
   // Extract component props
-  const { addHobbiesValue, handleSubmit } = props;
+  const { formState, handleSubmit } = props;
 
   // Extract dispatch & selector objects
   const dispatch = useDispatch();
@@ -48,11 +54,19 @@ let MyForm = (props) => {
       dispatch(change("My Redux Form", "backupEmail", e.target.value));
   };
 
+  // Mock API call to check username avaiability
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const checkUsername = async () => {
+    await sleep(1300);
+
+    console.log(formState);
+  };
+
   return (
     <div className="redux-form">
       <form onSubmit={handleSubmit((values) => console.log(values))}>
         <Field
-          name="Name"
+          name="name"
           label="Name"
           component={CustomInput} /// Use the custom input component instead of the default !
           type="text"
@@ -76,18 +90,14 @@ let MyForm = (props) => {
 
         <SelectCountry />
 
-        <FieldArray
-          name="hobbies"
-          component={RenderHobbies}
-          addHobbiesValue={addHobbiesValue}
-        />
+        <FieldArray name="hobbies" component={RenderHobbies} />
 
         <Field
           name="username"
           label="Username"
           component={CustomInput}
           type="text"
-          validate={validEmail}
+          onBlur={checkUsername}
         />
         <button type="submit">Submit</button>
       </form>
@@ -100,6 +110,13 @@ const form = "My Redux Form";
 // Decorate with Redux Form
 MyForm = reduxForm({
   form,
+})(MyForm);
+
+// Decorate with connect to read form state
+MyForm = connect((state) => {
+  const formState = getFormValues(form)(state);
+
+  return { formState };
 })(MyForm);
 
 export default MyForm;
