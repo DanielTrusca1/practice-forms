@@ -101,6 +101,7 @@ let MyForm = (props) => {
           type="text"
           onBlur={checkUsername}
         />
+        {<p className="inner-tip">Loading...</p>}
         <button type="submit">Submit</button>
       </form>
     </div>

@@ -140,10 +140,10 @@ button:hover {
 }
 .redux-form .inner-tip {
   position: relative;
-  left: 82%;
-  top: -6.4vh;
+  left: 80%;
+  top: -8.4vh;
   color: white;
-  font-size: 15px;
+  font-size: 14px;
 }
 .redux-form input {
   margin-bottom: 2vh;
