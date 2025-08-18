@@ -28,7 +28,10 @@ const validEmail = (value) =>
     ? undefined
     : "Invalid email adress";
 
-let MyForm = ({ handleSubmit }) => {
+let MyForm = (props) => {
+  // Extract component props
+  const { addHobbiesValue, handleSubmit } = props;
+
   // Extract dispatch & selector objects
   const dispatch = useDispatch();
   const selector = formValueSelector("My Redux Form");
@@ -73,7 +76,11 @@ let MyForm = ({ handleSubmit }) => {
 
         <SelectCountry />
 
-        <FieldArray name="hobbies" component={renderHobbies} />
+        <FieldArray
+          name="hobbies"
+          component={renderHobbies}
+          addHobbiesValue={addHobbiesValue}
+        />
 
         <Field
           name="username"
@@ -96,9 +103,9 @@ MyForm = reduxForm({
 // Decorate with connect to read form values
 const selector = formValueSelector("My Redux Form");
 MyForm = connect((state) => {
-  const addHobbies = selector(state, "addHobbies");
+  const addHobbiesValue = selector(state, "addHobbiesValue");
 
-  return { addHobbies };
+  return { addHobbiesValue };
 })(MyForm);
 
 export default MyForm;
