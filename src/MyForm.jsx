@@ -51,26 +51,24 @@ export default function MyForm() {
           console.log(data);
         })}
       >
-        <CustomInput label="abc" register={register} error={errors.abc} />
-
-        <div>
-          <input
-            {...register("name", {
-              required: "This field is required.",
-              minLength: {
-                value: 3,
-                message: "Minimum length is 3",
-              },
-              maxLength: 50,
-              pattern: {
-                value: /^[A-Za-z]+$/,
-                message: "Only letters are allowed",
-              },
-            })}
-            placeholder="Name"
-          />
-          <p>{errors.name?.message}</p>
-        </div>
+        <CustomInput
+          name="name"
+          label="Name"
+          register={register}
+          error={errors.name}
+          rules={{
+            required: "This field is required.",
+            minLength: {
+              value: 3,
+              message: "Minimum length is 3",
+            },
+            maxLength: 50,
+            pattern: {
+              value: /^[A-Za-z]+$/,
+              message: "Only letters are allowed",
+            },
+          }}
+        />
 
         <div>
           <input
