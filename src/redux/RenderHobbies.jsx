@@ -9,16 +9,19 @@ let RenderHobbies = ({ fields, formState }) => {
 
   const handleAdd = () => {
     // Prevent undefined value erorr in case input is empty
-    if (!formState) return;
+    //if (!formState) return;
 
-    fields.push(formState.addHobbies);
-    dispatch(change("My Redux Form", "addHobbies", ""));
+    // fields.push(formState.addHobbies);
+    fields.push("");
+
+    //dispatch(change("My Redux Form", "addHobbies", ""));
   };
 
   return (
     <div className="redux-hobbies-field">
       <label>Hobbies:</label>
       {fields.map((name, index) => {
+        console.log(name, index);
         return (
           <div className="hobbies-field" key={index}>
             <Field
@@ -61,7 +64,7 @@ let RenderHobbies = ({ fields, formState }) => {
 // Decorate with connect to read form values
 RenderHobbies = connect((state) => {
   const formState = getFormValues("My Redux Form")(state);
-
+  console.log("Form state", formState);
   return { formState };
 })(RenderHobbies);
 

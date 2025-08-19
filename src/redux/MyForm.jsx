@@ -18,6 +18,9 @@ import { connect, useDispatch } from "react-redux";
 import { formValueSelector } from "redux-form";
 import { useSelector } from "react-redux";
 
+// Import async validate function for username avaiability check
+import asyncValidate from "./UsernameAsyncValidate";
+
 const required = (value) => (value ? undefined : "Required");
 
 const minLength = (min) => (value) =>
@@ -52,16 +55,6 @@ let MyForm = (props) => {
 
     if (!backupEmailValue)
       dispatch(change("My Redux Form", "backupEmail", e.target.value));
-  };
-
-  // Mock API call to check username avaiability
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const checkUsername = async () => {
-    await sleep(1300);
-
-    if (formState.username.toLowerCase().startsWith("john")) {
-      console.log("Username is already taken");
-    }
   };
 
   return (
@@ -99,9 +92,7 @@ let MyForm = (props) => {
           label="Username"
           component={CustomInput}
           type="text"
-          onBlur={checkUsername}
         />
-        {<p className="inner-tip">Loading...</p>}
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -113,6 +104,8 @@ const form = "My Redux Form";
 // Decorate with Redux Form
 MyForm = reduxForm({
   form,
+  asyncValidate,
+  asyncBlurFields: ["username"],
 })(MyForm);
 
 // Decorate with connect to read form state

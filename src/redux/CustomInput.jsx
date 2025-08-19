@@ -1,6 +1,7 @@
 import React from "react";
 
 const CustomInput = ({ input, label, meta, onBlurAdditional, ...rest }) => {
+
   const handleBlur = (e) => {
     if (onBlurAdditional) onBlurAdditional(e);
 
@@ -19,6 +20,7 @@ const CustomInput = ({ input, label, meta, onBlurAdditional, ...rest }) => {
       {meta.touched && meta.error && (
         <span className="validation-message">{meta.error}</span>
       )}
+      {meta.asyncValidating && <p className="inner-tip">Loading...</p>}
     </div>
   );
 };
