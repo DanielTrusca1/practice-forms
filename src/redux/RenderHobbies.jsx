@@ -64,7 +64,6 @@ let RenderHobbies = ({ fields, formState }) => {
 // Decorate with connect to read form values
 RenderHobbies = connect((state) => {
   const formState = getFormValues("My Redux Form")(state);
-  console.log("Form state", formState);
   return { formState };
 })(RenderHobbies);
 

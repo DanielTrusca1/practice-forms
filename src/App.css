@@ -141,7 +141,7 @@ button:hover {
 .redux-form .inner-tip {
   position: relative;
   left: 80%;
-  top: -8.4vh;
+  top: -6.4vh;
   color: white;
   font-size: 14px;
 }
@@ -174,7 +174,8 @@ button:hover {
   top: -10vh;
   width: 25vw;
 }
-.redux-form form input, .redux-form form label {
+.redux-form form input,
+.redux-form form label {
   margin-bottom: 2vh;
 }
 
@@ -206,7 +207,7 @@ button:hover {
   color: white;
 }
 .redux-hobbies-field input {
-  margin: 0 !important; 
+  margin: 0 !important;
 }
 .redux-hobbies-field .hobbies-field {
   height: 5vh;

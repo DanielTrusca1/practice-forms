@@ -39,7 +39,7 @@ const validEmail = (value) =>
 
 let MyForm = (props) => {
   // Extract component props
-  const { formState, handleSubmit } = props;
+  const { handleSubmit } = props;
 
   // Extract dispatch & selector objects
   const dispatch = useDispatch();
