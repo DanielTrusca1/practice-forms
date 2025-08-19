@@ -1,11 +1,11 @@
 import React from "react";
 
-const CustomInput = ({ label, register, required, errors }) => {
+const CustomInput = ({ label, register, required, error }) => {
   return (
     <div>
-      <label>{label}</label>
-      <input {...register(label, { required })} />
-      <p>{errors.name?.message}</p>
+      <label>{label}:</label>
+      <input {...register(label, { required })} placeholder={label}/>
+      <p>{error && error.message}</p>
     </div>
   );
 };

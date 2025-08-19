@@ -9,6 +9,7 @@ import { useBlocker, useNavigate } from "react-router";
 // Import input components
 import SelectCountry from "./SelectCountry";
 import HobbiesInput from "./HobbiesInput";
+import CustomInput from "./CustomInput";
 
 export default function MyForm() {
   const {
@@ -50,6 +51,8 @@ export default function MyForm() {
           console.log(data);
         })}
       >
+        <CustomInput label="abc" register={register} error={errors.abc} />
+
         <div>
           <input
             {...register("name", {
