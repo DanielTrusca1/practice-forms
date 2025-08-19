@@ -70,48 +70,45 @@ export default function MyForm() {
           }}
         />
 
-        <div>
-          <input
-            {...register("email", {
-              required: "This field is required.",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Must be a valid email adress",
-              },
-            })}
-            onBlur={async () => {
-              // Autofill backup-email field
-              // If backup-email is not provided
-              if (!backupEmail) {
-                setValue("backup-email", email);
-              }
-            }}
-            placeholder="Email"
-          />
-          <p>{errors.email?.message}</p>
-        </div>
+        <CustomInput
+          name="email"
+          label="Email"
+          register={register}
+          error={errors.email}
+          rules={{
+            required: "This field is required.",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Must be a valid email adress",
+            },
+          }}
+        />
 
-        <div>
-          <input
-            {...register("backup-email", {
-              required: "This field is required.",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Must be a valid email adress",
-              },
-            })}
-            placeholder="Backup Email"
-          />
-          <p>{errors["backup-email"]?.message}</p>
-        </div>
+        <CustomInput
+          name="backup-email"
+          label="Backup Email"
+          register={register}
+          error={errors["backup-email"]}
+          rules={{
+            required: "This field is required.",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Must be a valid email adress",
+            },
+          }}
+        />
 
         <SelectCountry />
 
         <HobbiesInput />
 
         <div className="input">
-          <input
-            {...register("username", {
+          <CustomInput
+            name="username"
+            label="Username"
+            register={register}
+            error={errors.username}
+            rules={{
               required: "This field is required.",
               validate: async (value) => {
                 await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
@@ -119,12 +116,9 @@ export default function MyForm() {
                   ? "Username already taken"
                   : true;
               },
-            })}
-            onChange={async (e) => {}}
-            placeholder="Userame"
+            }}
           />
           {formState.isValidating && <p className="inner-tip">Loading...</p>}
-          <p>{errors.username?.message}</p>
         </div>
 
         <input type="submit" />
