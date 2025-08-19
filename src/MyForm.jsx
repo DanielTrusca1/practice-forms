@@ -18,7 +18,7 @@ export default function MyForm() {
     formState: { errors },
     formState: { isDirty },
     formState,
-    watch,
+    getValues,
     setValue,
   } = useForm({
     mode: "onBlur",
@@ -29,10 +29,6 @@ export default function MyForm() {
       username: "",
     },
   });
-
-  // Watch email and backup-email fields state
-  const email = watch("email");
-  const backupEmail = watch("backup-email");
 
   // Block navigation if the form has changes
   const navigate = useNavigate();
@@ -80,6 +76,10 @@ export default function MyForm() {
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: "Must be a valid email adress",
+            },
+            validate: () => {
+              if (!getValues("backup-email"))
+                setValue("backup-email", getValues("email"));
             },
           }}
         />
