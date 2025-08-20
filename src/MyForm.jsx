@@ -3,7 +3,7 @@ todo
 */
 
 import React, { useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useBlocker, useNavigate } from "react-router";
 
 // Import input components
@@ -20,6 +20,7 @@ export default function MyForm() {
     formState,
     getValues,
     setValue,
+    control,
   } = useForm({
     mode: "onBlur",
     defaultValues: {
@@ -47,18 +48,21 @@ export default function MyForm() {
           console.log(data);
         })}
       >
-        <CustomInput
+        <Controller
+          control={control}
           name="name"
-          label="Name"
-          register={register}
-          error={errors.name}
+          render={({ field }) => (
+            <CustomInput
+              label="Name"
+              {...field}
+              register={register}
+              error={errors.name}
+            />
+          )}
           rules={{
             required: "This field is required.",
-            minLength: {
-              value: 3,
-              message: "Minimum length is 3",
-            },
-            maxLength: 50,
+            minLength: { value: 3, message: "Minimum length is 3" },
+            maxLength: { value: 50, message: "Maximum length is 50" },
             pattern: {
               value: /^[A-Za-z]+$/,
               message: "Only letters are allowed",
@@ -79,7 +83,6 @@ export default function MyForm() {
             },
           }}
           onBlur={() => {
-            // todo fix
             if (!getValues("backup-email"))
               setValue("backup-email", getValues("email"));
           }}
