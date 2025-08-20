@@ -78,7 +78,8 @@ export default function MyForm() {
               message: "Must be a valid email adress",
             },
           }}
-          onBlur={() => { // todo fix 
+          onBlur={() => {
+            // todo fix
             if (!getValues("backup-email"))
               setValue("backup-email", getValues("email"));
           }}
