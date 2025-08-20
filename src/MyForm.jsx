@@ -123,12 +123,13 @@ export default function MyForm() {
           <Controller
             control={control}
             name="username"
-            render={({ field }) => (
+            render={({ field, formState : {isValidating} }) => (
               <CustomInput
                 label="Username"
                 {...field}
                 register={register}
                 error={errors.username}
+                isValidating={isValidating}
               />
             )}
             rules={{
@@ -141,8 +142,6 @@ export default function MyForm() {
               },
             }}
           />
-
-          {formState.isValidating && <p className="inner-tip">Loading...</p>}
         </div>
 
         <input type="submit" />
