@@ -70,21 +70,28 @@ export default function MyForm() {
           }}
         />
 
-        <CustomInput
+        <Controller
+          control={control}
           name="email"
-          label="Email"
-          register={register}
-          error={errors.email}
+          render={({ field }) => (
+            <CustomInput
+              label="Email"
+              {...field}
+              register={register}
+              error={errors.email}
+              onBlur={() => {
+                field.onBlur();
+                if (!getValues("backup-email"))
+                  setValue("backup-email", getValues("email"));
+              }}
+            />
+          )}
           rules={{
             required: "This field is required.",
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: "Must be a valid email adress",
             },
-          }}
-          onBlur={() => {
-            if (!getValues("backup-email"))
-              setValue("backup-email", getValues("email"));
           }}
         />
 

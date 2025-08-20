@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomInput = ({ label, name, register, error }) => {
+const CustomInput = ({ label, name, register, error, onBlur }) => {
 
   return (
     <div>
@@ -8,6 +8,7 @@ const CustomInput = ({ label, name, register, error }) => {
       <input
         {...register(name)}
         placeholder={label}
+        onBlur={onBlur}
       />
       <p>{error && error.message}</p>
     </div>
