@@ -24,7 +24,9 @@ import asyncValidate from "./UsernameAsyncValidate";
 const required = (value) => (value ? undefined : "Required");
 
 const minLength = (min) => (value) =>
-  value && value.length < min ? `Must be at least ${min} chars` : undefined;
+  value === undefined || value.length < min
+    ? `Must be at least ${min} chars`
+    : undefined;
 
 const maxLength = (max) => (value) =>
   value && value.length > max ? `Must be at most ${max} chars` : undefined;
