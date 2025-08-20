@@ -37,6 +37,9 @@ const validEmail = (value) =>
     ? undefined
     : "Invalid email adress";
 
+// Export validation methods
+export { required, minLength, maxLength, onlyLetters };
+
 let MyForm = (props) => {
   // Extract component props
   const { handleSubmit } = props;
