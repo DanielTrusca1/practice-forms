@@ -95,11 +95,17 @@ export default function MyForm() {
           }}
         />
 
-        <CustomInput
+        <Controller
+          control={control}
           name="backup-email"
-          label="Backup Email"
-          register={register}
-          error={errors["backup-email"]}
+          render={({ field }) => (
+            <CustomInput
+              label="Backup Email"
+              {...field}
+              register={register}
+              error={errors["backup-email"]}
+            />
+          )}
           rules={{
             required: "This field is required.",
             pattern: {
@@ -114,11 +120,17 @@ export default function MyForm() {
         <HobbiesInput />
 
         <div className="input">
-          <CustomInput
+          <Controller
+            control={control}
             name="username"
-            label="Username"
-            register={register}
-            error={errors.username}
+            render={({ field }) => (
+              <CustomInput
+                label="Username"
+                {...field}
+                register={register}
+                error={errors.username}
+              />
+            )}
             rules={{
               required: "This field is required.",
               validate: async (value) => {
@@ -129,6 +141,7 @@ export default function MyForm() {
               },
             }}
           />
+
           {formState.isValidating && <p className="inner-tip">Loading...</p>}
         </div>
 
