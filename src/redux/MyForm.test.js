@@ -10,6 +10,7 @@ import "@testing-library/jest-dom";
 
 // Import the component to test + Redux dependencies
 import { Provider } from "react-redux";
+import { reduxForm } from "redux-form";
 import MyForm from "./MyForm";
 import { store } from "./store";
 
@@ -40,12 +41,18 @@ test("onlyLetters validation", () => {
   expect(onlyLetters("abcdefg")).toBe(undefined);
 });
 
+const TestForm = reduxForm({ form: "test" })(MyForm);
+
 test("approve or reject form submission", async () => {
+  const mockSubmit = jest.fn();
+
   render(
     <Provider store={store}>
-      <MyForm />
+      <TestForm onSubmit={mockSubmit} />
     </Provider>
   );
 
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
+
+  expect(mockSubmit).toHaveBeenCalled();
 });
