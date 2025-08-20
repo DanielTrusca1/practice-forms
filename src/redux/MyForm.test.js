@@ -1,6 +1,17 @@
-// Test My Form SUBMIT functionality
-import {render, screen} from '@testing-library/react'
+import React from "react";
 
+// Test My Form SUBMIT functionality
+import { render, screen } from "@testing-library/react";
+
+// userEvent library simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
+import userEvent from "@testing-library/user-event";
+
+import "@testing-library/jest-dom";
+
+// Import the component to test + Redux dependencies
+import { Provider } from "react-redux";
+import MyForm from "./MyForm";
+import { store } from "./store";
 
 // Test field level validation
 import { required, minLength, maxLength, onlyLetters } from "./MyForm";
@@ -25,7 +36,16 @@ test("maximum length validation", () => {
 });
 
 test("onlyLetters validation", () => {
-    expect(onlyLetters("123abcdefg")).toBe("Only letter allowed");
-    expect(onlyLetters("abcdefg")).toBe(undefined);
-})
+  expect(onlyLetters("123abcdefg")).toBe("Only letter allowed");
+  expect(onlyLetters("abcdefg")).toBe(undefined);
+});
 
+test("approve or reject form submission", async () => {
+  render(
+    <Provider store={store}>
+      <MyForm />
+    </Provider>
+  );
+
+  userEvent.click(screen.getByRole("button", { name: "Submit" }));
+});

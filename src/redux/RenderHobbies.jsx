@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Field, getFormValues } from "redux-form";
 
 // Custom Input component
