@@ -212,3 +212,14 @@ button:hover {
 .redux-hobbies-field .hobbies-field {
   height: 5vh;
 }
+.add-hobbie {
+  width: 40% !important;
+  left: 30% !important;
+  top: -2vh !important;
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
+  background-color: rgb(100, 230, 100) !important;
+  color: black !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}

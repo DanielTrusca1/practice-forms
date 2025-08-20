@@ -77,10 +77,10 @@ export default function MyForm() {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: "Must be a valid email adress",
             },
-            validate: () => {
-              if (!getValues("backup-email"))
-                setValue("backup-email", getValues("email"));
-            },
+          }}
+          onBlur={() => { // todo fix 
+            if (!getValues("backup-email"))
+              setValue("backup-email", getValues("email"));
           }}
         />
 
