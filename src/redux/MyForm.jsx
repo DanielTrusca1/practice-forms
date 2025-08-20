@@ -64,7 +64,11 @@ let MyForm = (props) => {
 
   return (
     <div className="redux-form">
-      <form onSubmit={handleSubmit((values) => console.log(values))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          return true;
+        })}
+      >
         <Field
           name="name"
           label="Name"

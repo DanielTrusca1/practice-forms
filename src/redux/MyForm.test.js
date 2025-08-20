@@ -1,3 +1,8 @@
+// Test My Form SUBMIT functionality
+import {render, screen} from '@testing-library/react'
+
+
+// Test field level validation
 import { required, minLength, maxLength, onlyLetters } from "./MyForm";
 
 test("required with undefined value to return an error message", () => {
@@ -20,6 +25,7 @@ test("maximum length validation", () => {
 });
 
 test("onlyLetters validation", () => {
-  expect(onlyLetters("123abcdefg")).toBe("Only letter allowed");
-  expect(onlyLetters("abcdefg")).toBe(undefined);
-});
+    expect(onlyLetters("123abcdefg")).toBe("Only letter allowed");
+    expect(onlyLetters("abcdefg")).toBe(undefined);
+})
+
