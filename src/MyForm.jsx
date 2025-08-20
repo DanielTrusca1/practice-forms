@@ -17,7 +17,6 @@ export default function MyForm() {
     handleSubmit,
     formState: { errors },
     formState: { isDirty },
-    formState,
     getValues,
     setValue,
     control,

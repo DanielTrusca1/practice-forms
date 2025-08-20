@@ -1,6 +1,7 @@
 import React from "react";
 
 const CustomInput = ({ label, name, register, error, onBlur, isValidating}) => {
+
   return (
     <div>
       <label>{label}:</label>

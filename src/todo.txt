@@ -1,0 +1,6 @@
+test validare pe name field
+daca NU sunt erori de validare => submit()
+daca sunt => nu se apeleaza submit()
+test add hobbie si remove hobbie
+
+Jest si React Testing Library
