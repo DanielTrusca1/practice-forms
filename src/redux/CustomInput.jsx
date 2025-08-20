@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomInput = ({ input, label, meta, onBlurAdditional, ...rest }) => {
+const CustomInput = ({ input, label, meta, onBlurAdditional,placeholder, ...rest }) => {
 
   const handleBlur = (e) => {
     if (onBlurAdditional) onBlurAdditional(e);
@@ -14,7 +14,7 @@ const CustomInput = ({ input, label, meta, onBlurAdditional, ...rest }) => {
       <input
         {...input}
         {...rest}
-        placeholder={label === "none" ? "" : label}
+        placeholder={placeholder ? placeholder : label}
         onBlur={handleBlur}
       />
       {meta.touched && meta.error && (

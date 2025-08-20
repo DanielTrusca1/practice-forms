@@ -9,7 +9,9 @@ let RenderHobbies = ({ fields, formState }) => {
     <div className="redux-hobbies-field">
       <label>Hobbies:</label>
 
-      <button className="add-hobbie">+ Add Hobbie</button>
+      <button className="add-hobbie" onClick={() => fields.push()}>
+        + Add Hobbie
+      </button>
 
       {fields.map((name, index) => {
         return (
@@ -21,6 +23,13 @@ let RenderHobbies = ({ fields, formState }) => {
               type="text"
               placeholder={`Hobby #${index + 1}`}
             />
+            <button
+              type="button"
+              onClick={() => fields.remove(index)}
+              style={{ backgroundColor: "rgb(255, 100, 100)" }}
+            >
+              x
+            </button>
           </div>
         );
       })}
