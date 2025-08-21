@@ -52,6 +52,25 @@ test("approve or reject form submission", async () => {
     </Provider>
   );
 
+  // Test for submit rejection
+  // -------------------------
+
+  userEvent.click(screen.getByRole("button", { name: "Submit" }));
+
+  expect(mockSubmit).not.toHaveBeenCalled();
+
+  // Test for submit acceptance
+  // --------------------------
+  // Target all input fields
+  const nameInput = screen.getByPlaceholderText("Name");
+  const emailInput = screen.getByPlaceholderText("Email");
+  const usernameInput = screen.getByPlaceholderText("Username");
+
+  // Fill all input fields with valid data
+  userEvent.type(nameInput, "ABCDE");
+  userEvent.type(emailInput, "abcde@gmail.com");
+  userEvent.type(usernameInput, "ABCDE");
+
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
 
   expect(mockSubmit).toHaveBeenCalled();
