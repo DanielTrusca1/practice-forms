@@ -44,7 +44,7 @@ export { required, minLength, maxLength, onlyLetters };
 
 let MyForm = (props) => {
   // Extract component props
-  const { handleSubmit } = props;
+  const { handleSubmit, onAccept } = props;
 
   // Extract dispatch & selector objects
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ let MyForm = (props) => {
     <div className="redux-form">
       <form
         onSubmit={handleSubmit((data) => {
-          console.log(data)
+          onAccept();
         })}
       >
         <Field

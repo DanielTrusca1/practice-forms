@@ -40,12 +40,12 @@ test("onlyLetters validation", () => {
   expect(onlyLetters("abcdefg")).toBe(undefined);
 });
 
-test("approve or reject form submission", async () => {
-  const mockSubmit = jest.fn();
+test("accept or reject form submission", async () => {
+  const mockAccept = jest.fn();
 
   render(
     <Provider store={store}>
-      <MyForm handleSubmit={mockSubmit} />
+      <MyForm onAccept={mockAccept} />
     </Provider>
   );
 
@@ -54,7 +54,7 @@ test("approve or reject form submission", async () => {
 
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
 
-  expect(mockSubmit).not.toHaveBeenCalled();
+  expect(mockAccept).not.toHaveBeenCalled();
 
   // Test for submit acceptance
   // --------------------------
@@ -70,5 +70,5 @@ test("approve or reject form submission", async () => {
 
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
 
-  expect(mockSubmit).toHaveBeenCalled();
+  expect(mockAccept).toHaveBeenCalled();
 });
