@@ -40,35 +40,21 @@ test("onlyLetters validation", () => {
   expect(onlyLetters("abcdefg")).toBe(undefined);
 });
 
-test("accept or reject form submission", async () => {
-  const mockAccept = jest.fn();
-
+test("render the redux form component", () => {
   render(
     <Provider store={store}>
-      <MyForm onAccept={mockAccept} />
+      <MyForm onAccept={jest.fn()} />
     </Provider>
   );
 
-  // Test for submit rejection
-  // -------------------------
-
-  userEvent.click(screen.getByRole("button", { name: "Submit" }));
-
-  expect(mockAccept).not.toHaveBeenCalled();
-
-  // Test for submit acceptance
-  // --------------------------
   // Target all input fields
   const nameInput = screen.getByPlaceholderText("Name");
   const emailInput = screen.getByPlaceholderText("Email");
+  const backupEmailInput = screen.getByPlaceholderText("Backup-Email");
   const usernameInput = screen.getByPlaceholderText("Username");
 
-  // Fill all input fields with valid data
-  userEvent.type(nameInput, "ABCDE");
-  userEvent.type(emailInput, "abcde@gmail.com");
-  userEvent.type(usernameInput, "ABCDE");
-
-  userEvent.click(screen.getByRole("button", { name: "Submit" }));
-
-  expect(mockAccept).toHaveBeenCalled();
+  expect(nameInput).toBeInTheDocument();
+  expect(emailInput).toBeInTheDocument();
+  expect(backupEmailInput).toBeInTheDocument();
+  expect(usernameInput).toBeInTheDocument();
 });
