@@ -32,7 +32,7 @@ const maxLength = (max) => (value) =>
   value && value.length > max ? `Must be at most ${max} chars` : undefined;
 
 const onlyLetters = (value) =>
-  value && /^[A-Za-z]+$/.test(value) ? undefined : "Only letter allowed";
+  value && /^[A-Za-z]+$/.test(value) ? undefined : "Only letters allowed";
 
 const validEmail = (value) =>
   value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)

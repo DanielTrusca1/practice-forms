@@ -36,7 +36,7 @@ test("maximum length validation", () => {
 });
 
 test("onlyLetters validation", () => {
-  expect(onlyLetters("123abcdefg")).toBe("Only letter allowed");
+  expect(onlyLetters("123abcdefg")).toBe("Only letters allowed");
   expect(onlyLetters("abcdefg")).toBe(undefined);
 });
 
@@ -66,9 +66,39 @@ test("shows error message if name is invalid", () => {
     </Provider>
   );
 
+  const nameInput = screen.getByPlaceholderText("Name");
+  let errorMessage;
+
   const submitButton = screen.getByText("Submit");
+
+  // Test required
   fireEvent.click(submitButton);
 
-  const errorMessage = screen.getByText("Name is required");
+  errorMessage = screen.getByText("Name is required");
+  expect(errorMessage).toBeInTheDocument();
+
+  // Test alpha chars
+  userEvent.type(nameInput, "123");
+  fireEvent.click(submitButton);
+
+  errorMessage = screen.getByText("Only letters allowed");
+  expect(errorMessage).toBeInTheDocument();
+
+  // Test min length
+  nameInput.focus();
+  userEvent.clear(nameInput);
+  userEvent.type(nameInput, "ab");
+  fireEvent.click(submitButton);
+
+  errorMessage = screen.getByText("Must be at least 3 chars");
+  expect(errorMessage).toBeInTheDocument();
+
+  // Test max length
+  nameInput.focus();
+  userEvent.clear(nameInput);
+  userEvent.type(nameInput, "a".repeat(60));
+  fireEvent.click(submitButton);
+
+  errorMessage = screen.getByText("Must be at most 50 chars");
   expect(errorMessage).toBeInTheDocument();
 });
