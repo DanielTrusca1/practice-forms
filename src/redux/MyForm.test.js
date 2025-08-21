@@ -1,7 +1,7 @@
 import React from "react";
 
 // Test My Form SUBMIT functionality
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 // userEvent library simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
 import userEvent from "@testing-library/user-event";
@@ -17,7 +17,7 @@ import { store } from "./store";
 import { required, minLength, maxLength, onlyLetters } from "./MyForm";
 
 test("required with undefined value to return an error message", () => {
-  expect(required(undefined)).toBe("Required");
+  expect(required(undefined)).toBe("Name is required");
 });
 test("required with string value to return undefined", () => {
   expect(required("abc")).toBe(undefined);
@@ -57,4 +57,18 @@ test("render the redux form component", () => {
   expect(emailInput).toBeInTheDocument();
   expect(backupEmailInput).toBeInTheDocument();
   expect(usernameInput).toBeInTheDocument();
+});
+
+test("shows error message if name is invalid", () => {
+  render(
+    <Provider store={store}>
+      <MyForm onAccept={jest.fn()} />
+    </Provider>
+  );
+
+  const submitButton = screen.getByText("Submit");
+  fireEvent.click(submitButton);
+
+  const errorMessage = screen.getByText("Name is required");
+  expect(errorMessage).toBeInTheDocument();
 });

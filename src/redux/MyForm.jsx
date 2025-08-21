@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 // Import async validate function for username avaiability check
 import asyncValidate from "./UsernameAsyncValidate";
 
-const required = (value) => (value ? undefined : "Required");
+const required = (value) => (value ? undefined : "Name is required");
 
 const minLength = (min) => (value) =>
   value === undefined || value.length < min
