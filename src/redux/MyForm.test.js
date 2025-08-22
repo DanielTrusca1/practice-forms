@@ -1,7 +1,7 @@
 import React from "react";
 
 // Test My Form SUBMIT functionality
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 // userEvent library simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
 import userEvent from "@testing-library/user-event";
@@ -101,4 +101,33 @@ test("shows error message if name is invalid", () => {
 
   errorMessage = screen.getByText("Must be at most 50 chars");
   expect(errorMessage).toBeInTheDocument();
+});
+
+test("shows error message if email is invalid", async () => {
+  render(
+    <Provider store={store}>
+      <MyForm onAccept={jest.fn()} />
+    </Provider>
+  );
+
+  const emailInput = screen.getByPlaceholderText("Email");
+  const backupEmailInput = screen.getByPlaceholderText("Backup-Email");
+
+  let errorMessage;
+
+  const submitButton = screen.getByText("Submit");
+
+  // Test invalid email
+  fireEvent.click(submitButton);
+
+  errorMessage = screen.queryAllByText("Invalid email adress")[0];
+  expect(errorMessage).toBeInTheDocument();
+
+  // Test valid email
+  userEvent.type(backupEmailInput, "abcde@gmail.com");
+  userEvent.type(emailInput, "abcde@gmail.com");
+  fireEvent.click(submitButton);
+
+  errorMessage = screen.queryByText("Invalid email address");
+  expect(errorMessage).not.toBeInTheDocument();
 });
