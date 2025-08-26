@@ -17,7 +17,7 @@ let RenderHobbies = ({ fields, formState }) => {
 
       {fields.map((name, index) => {
         return (
-          <div className="hobbies-field" key={index}>
+          <div role="hobbie" className="hobbies-field" key={index}>
             <Field
               name={name}
               label="none"
