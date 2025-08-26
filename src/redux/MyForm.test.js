@@ -15,7 +15,13 @@ import { store } from "./store";
 
 // Test field level validation
 import { required, minLength, maxLength, onlyLetters } from "./MyForm";
+
+// Mock async function
 import asyncValidate from "./UsernameAsyncValidate";
+jest.mock("./UsernameAsyncValidate", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 test("required with undefined value to return an error message", () => {
   expect(required(undefined)).toBe("Name is required");
@@ -142,7 +148,7 @@ test("shows name must have max length", async () => {
   expect(errorMessage).toBeInTheDocument();
 });
 
-test.only("shows error message if email is invalid", async () => {
+test("shows error message if email is invalid", async () => {
   render(
     <Provider store={store}>
       <MyForm onAccept={jest.fn()} />
@@ -163,14 +169,35 @@ test.only("shows error message if email is invalid", async () => {
   expect(errorMessage).toBeInTheDocument();
 
   // Test valid email
-
   user.type(emailInput, "abcde@gmail.com");
   user.type(backupEmailInput, "abcde@gmail.com");
   fireEvent.click(submitButton);
 });
 
-test("submits form if data is valid", async () => {
+/*
+test("rejects on submit if data is not valid", async () => {
   const onAccept = jest.fn();
+
+  render(
+    <Provider store={store}>
+      <MyForm onAccept={onAccept} />
+    </Provider>
+  );
+
+  // Assert
+  expect(onAccept).toHaveBeenCalled();
+});
+*/
+
+test("submits form if data is valid", async () => {
+  // Mock functions
+  const onAccept = jest.fn();
+  asyncValidate.mockImplementation((values) => {
+    if (values.username.toLowerCase().startsWith("john")) {
+      return Promise.reject({ username: "That username is taken" });
+    }
+    return Promise.resolve(undefined);
+  });
 
   render(
     <Provider store={store}>
@@ -187,15 +214,42 @@ test("submits form if data is valid", async () => {
   // Action
   await user.type(nameInput, "abcde");
   await user.type(emailInput, "abcde@gmail.com");
-  await user.type(backupEmailInput, "abcde@gmail.com");
   await user.type(usernameInput, "abcde");
-  await user.tab(); // for async request
+  await user.tab(); // trigger onBlur async request
+
+  // [DEBUGGING] Log form values
+  // console.log(
+  //   nameInput.value,
+  //   emailInput.value,
+  //   backupEmailInput.value,
+  //   usernameInput.value
+  // );
 
   // username check mock API call
+
+  // [DEBUGGING] console.log(asyncValidate.mock.calls);
+
   await waitFor(() => {
-    expect(asyncValidate).toHaveBeenCalledWith("abcde");
+    // The function is called with an object because of Redux-Form behavior
+    expect(asyncValidate).toHaveBeenCalledWith(
+      expect.objectContaining({ username: "abcde" }),
+      expect.any(Function),
+      expect.any(Object),
+      "username"
+    );
   });
 
+  // Submit
+  const submitButton = screen.getByText("Submit");
+  await user.click(submitButton);
+
   // Assert
+
+  // Check if any validation error message appeared
+  let errorMessage = screen.queryByText((_, el) =>
+    el.classList.contains("inner-tip")
+  );
+  expect(errorMessage).not.toBeInTheDocument();
+
   expect(onAccept).toHaveBeenCalled();
 });
