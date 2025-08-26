@@ -1,7 +1,7 @@
 import React from "react";
 
 // Test My Form SUBMIT functionality
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 // userEvent library simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
 import userEvent from "@testing-library/user-event";
@@ -155,26 +155,18 @@ test("shows error message if email is invalid", async () => {
     </Provider>
   );
 
+  // Arrange
   const emailInput = screen.getByPlaceholderText("Email");
-  const backupEmailInput = screen.getByPlaceholderText("Backup-Email");
-
-  let errorMessage;
-
   const submitButton = screen.getByText("Submit");
 
-  // Test invalid email
-  fireEvent.click(submitButton);
+  // Action
+  await user.click(submitButton);
 
-  errorMessage = screen.queryAllByText("Invalid email adress")[0];
-  expect(errorMessage).toBeInTheDocument();
-
-  // Test valid email
-  user.type(emailInput, "abcde@gmail.com");
-  user.type(backupEmailInput, "abcde@gmail.com");
-  fireEvent.click(submitButton);
+  // Assert
+  let errors = screen.queryAllByText("Invalid email adress");
+  expect(errors.length).toBeGreaterThan(0);
 });
 
-/*
 test("rejects on submit if data is not valid", async () => {
   const onAccept = jest.fn();
 
@@ -185,9 +177,8 @@ test("rejects on submit if data is not valid", async () => {
   );
 
   // Assert
-  expect(onAccept).toHaveBeenCalled();
+  expect(onAccept).not.toHaveBeenCalled();
 });
-*/
 
 test("submits form if data is valid", async () => {
   // Mock functions

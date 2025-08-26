@@ -1,6 +1,6 @@
 1 - DONE - test validare pe name field
-2 - daca NU sunt erori de validare => submit()
-3 - daca sunt => nu se apeleaza submit()
+2 - DONE - daca NU sunt erori de validare => submit()
+3 - DONE - daca sunt => nu se apeleaza submit()
 4 - test add hobbie si remove hobbie
 
 Jest si React Testing Library
