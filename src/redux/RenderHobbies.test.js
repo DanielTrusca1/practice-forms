@@ -18,13 +18,20 @@ test("add hobbies", async () => {
 
   // Arrange
   const addButton = screen.getByText("+ Add Hobbie");
+  let previousHobbies;
+
+  // In case there are no hobbies currently
+  if(!screen.queryAllByPlaceholderText(/Hobby #\d+/)) 
+    previousHobbies = 0;
+  else
+    previousHobbies = screen.queryAllByPlaceholderText(/Hobby #\d+/).length;
 
   // Action
   await user.click(addButton);
 
   // Assert
-  const hobbies = screen.getAllByPlaceholderText(/Hobby #\d+/);
-  expect(hobbies.length).toBeGreaterThan(0);
+  const hobbies = screen.queryAllByPlaceholderText(/Hobby #\d+/);
+  expect(hobbies.length).toBe(previousHobbies + 1);
 });
 
 test("remove hobbies", async () => {
